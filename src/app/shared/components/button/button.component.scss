@@ -1,0 +1,24 @@
+/* src/app/shared/components/button/button.component.scss */
+button {
+  padding: var(--spacing-sm) var(--spacing-md); /* Adjust padding for better width */
+  border: none;
+  border-radius: var(--border-radius); /* Keep corners rounded */
+  background-color: #f7d154; /* Yellow background */
+  color: #333; /* Dark text color for contrast */
+  font-size: var(--font-size-medium); /* Medium font size */
+  font-weight: bold; /* Bold text for emphasis */
+  cursor: pointer;
+  box-shadow: var(--shadow-sm); /* Add subtle shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
+}
+
+button:hover {
+  background-color: #e4c144; /* Slightly darker yellow for hover effect */
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: var(--shadow-md); /* Slightly stronger shadow on hover */
+}
+
+button:active {
+  transform: translateY(0); /* Reset lift on click */
+  box-shadow: var(--shadow-sm); /* Reset shadow on click */
+}

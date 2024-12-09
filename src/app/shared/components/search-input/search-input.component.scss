@@ -1,0 +1,9 @@
+/* src/app/shared/components/search-input/search-input.component.scss */
+/* src/app/shared/components/search-input/search-input.component.scss */
+.search-input {
+  width: 80%; /* Set the width to 25% of the screen */
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-medium);
+}

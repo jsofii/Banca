@@ -1,0 +1,70 @@
+/* Base Layout */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--background-color); /* Light gray background */
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-color); /* White background */
+  padding: var(--spacing-md); /* Consistent spacing */
+  box-shadow: var(--shadow-sm); /* Subtle shadow for depth */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 48px; /* Size of the logo */
+  height: 48px;
+  margin-right: var(--spacing-sm); /* Space between logo and title */
+}
+
+.title {
+  font-family: 'Roboto', sans-serif; /* Use a clean and modern font */
+  font-size: var(--font-size-large); /* Title size */
+  color: var(--primary-color); /* Dark blue color for text */
+  font-weight: bold; /* Bold weight for emphasis */
+  text-transform: uppercase; /* Ensure the title is uppercase */
+  margin: 0; /* Remove default margin */
+}
+
+/* Main Content */
+.content {
+  flex: 1;
+  padding: var(--spacing-lg); /* Padding for content */
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px; /* Restrict max width for better readability */
+  background-color: var(--secondary-color); /* White background for content */
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius); /* Rounded corners */
+  box-shadow: var(--shadow-md); /* Depth for content container */
+}
+
+/* src/app/features/product/containers/product/product.component.scss */
+.product-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.search-input {
+  width: 25%;
+}
+
+.action-button {
+  width: auto;
+}

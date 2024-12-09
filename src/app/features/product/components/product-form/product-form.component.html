@@ -1,0 +1,93 @@
+<div class="registration-form">
+  <!-- Form Header -->
+  <h2 class="form-title">Formulario de Registro</h2>
+
+  <!-- Form Fields -->
+  <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+    <div class="form-row">
+      <!-- ID -->
+      <div class="form-group">
+        <label for="id">ID</label>
+        <input
+          id="id"
+          type="text"
+          formControlName="id"
+          [class.invalid]="isFieldInvalid('id')"
+        />
+        <span *ngIf="isFieldInvalid('id')" class="error-message">
+          ID no válido!
+        </span>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          [class.invalid]="isFieldInvalid('name')"
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input
+          id="description"
+          type="text"
+          formControlName="description"
+          [class.invalid]="isFieldInvalid('description')"
+        />
+        <span *ngIf="isFieldInvalid('description')" class="error-message">
+          Este campo es requerido!
+        </span>
+      </div>
+
+      <!-- Logo -->
+      <div class="form-group">
+        <label for="logo">Logo</label>
+        <input
+          id="logo"
+          type="text"
+          formControlName="logo"
+          [class.invalid]="isFieldInvalid('logo')"
+        />
+        <span *ngIf="isFieldInvalid('logo')" class="error-message">
+          Este campo es requerido!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Release Date -->
+      <div class="form-group">
+        <label for="releaseDate">Fecha Liberación</label>
+        <input
+          id="releaseDate"
+          type="date"
+          formControlName="releaseDate"
+        />
+      </div>
+
+      <!-- Review Date -->
+      <div class="form-group">
+        <label for="reviewDate">Fecha Revisión</label>
+        <input
+          id="reviewDate"
+          type="date"
+          formControlName="reviewDate"
+          [disabled]="true"
+        />
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-actions">
+      <button type="button" class="reset-button" (click)="onReset()">Reiniciar</button>
+      <button type="submit" class="submit-button">Enviar</button>
+    </div>
+  </form>
+</div>
