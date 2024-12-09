@@ -1,0 +1,9 @@
+/* Import the CSS Reset */
+@import './reset.css';
+
+/* Add your global styles below */
+:root {
+  --primary-color: #1e2a78;
+  --secondary-color: #ffffff;
+  /* More variables */
+}

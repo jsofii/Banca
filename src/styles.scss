@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@import './reset.css';
+
+:root {
+  /* Colors */
+  --primary-color: #1e2a78;
+  --secondary-color: #ffffff;
+  --background-color: #f4f7fb;
+  --border-color: #e0e0e0;
+  --text-color: #333;
+  --text-secondary-color: #666;
+
+  /* Font Sizes */
+  --font-size-small: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-large: 1.25rem;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+
+  /* Border Radius */
+  --border-radius: 8px;
+
+  /* Shadows */
+  --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+/* styles.css */
+
