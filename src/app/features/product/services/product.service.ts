@@ -19,7 +19,7 @@ export class ProductService {
 
   // Update an existing product
   updateProduct(id: string, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
+    return this.http.put<Product>(`${this.apiUrl}/products/${id}`, product);
   }
 
   // Get a product by ID

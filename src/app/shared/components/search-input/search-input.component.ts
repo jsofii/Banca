@@ -12,7 +12,6 @@ export class SearchInputComponent {
   constructor(private filterService: ProductFilterService) {}
 
   onSearch(event: Event): void {
-    console.log('searching...');
     const query = (event.target as HTMLInputElement).value;
     this.filterService.updateSearchQuery(query); // Update the query in the service
   }

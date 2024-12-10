@@ -25,11 +25,10 @@ export class ProductListComponent implements OnInit{
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(it =>{
-      console.log(it)
-      console.log(it.data)
       this.products = it.data;
       this.filteredProducts = it.data;
-      console.log(this.products)
+      this.visibleProducts = it.data;
+      this.updateVisibleProducts();
     })
 
     this.filterService.searchQuery$.subscribe((query) => {
@@ -58,6 +57,10 @@ export class ProductListComponent implements OnInit{
       this.router.navigate(['/product/edit', product.id]);
     } else if (action === 'delete') {
     }
+  }
+
+  click(){
+    console.log('visibleProducts', this.visibleProducts);
   }
 
 

@@ -28,18 +28,16 @@ export class ProductFormComponent implements OnInit {
       date_release: ['', Validators.required],
       date_revision: [{ value: '2024-12-25', disabled: true }]
     });
-    console.log('GOING HERE!!!')
-    this.productId = this.route.snapshot.paramMap.get('id');
-    if (this.productId) {
-      this.isEditing = true;
-      console.log('GOING HERE!222!!')
 
+    this.productId = this.route.snapshot.paramMap.get('id');
+    if (this.productId !== null) {
+      this.isEditing = true;
       this.productService.getProductById(this.productId).subscribe(product => {
-        console.log('PRODUCT!!', product)
         this.formGroup.patchValue(product);
       });
+    }else{
+      this.isEditing = false
     }
-    this.isEditing = false;
   }
 
   // Check if a field is invalid
@@ -66,12 +64,10 @@ export class ProductFormComponent implements OnInit {
 
       if(this.isEditing){
         this.productService.updateProduct(this.productId ?? '', product).subscribe(() => {
-          console.log('Product created successfully');
           this.onReset();
         });
       }else{
         this.productService.createProduct(product).subscribe(() => {
-          console.log('Product created successfully');
           this.onReset();
         });
       }
