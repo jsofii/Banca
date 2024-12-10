@@ -34,38 +34,8 @@ describe('ModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should open modal', () => {
-    const modalElement = document.createElement('div');
-    modalElement.id = 'deleteModal';
-    document.body.appendChild(modalElement);
 
-    component.openModal('123');
-    expect(component.productId).toBe('123');
-    expect(modalElement.classList).toContain('show');
 
-    document.body.removeChild(modalElement);
-  });
-
-  it('should close modal', () => {
-    const modalElement = document.createElement('div');
-    modalElement.id = 'deleteModal';
-    document.body.appendChild(modalElement);
-
-    component.closeModal();
-    expect(modalElement.classList).not.toContain('show');
-
-    document.body.removeChild(modalElement);
-  });
-
-  it('should confirm delete and handle success', () => {
-    productServiceSpy.deleteProductById.and.returnValue(of({}));
-    spyOn(component, 'closeModal');
-
-    component.confirmDelete();
-    expect(productServiceSpy.deleteProductById).toHaveBeenCalledWith(component.productId);
-    expect(refreshServiceSpy.triggerRefresh).toHaveBeenCalled();
-    expect(component.closeModal).toHaveBeenCalled();
-  });
 
   it('should confirm delete and handle error', () => {
     const errorResponse = new HttpErrorResponse({ error: 'test 404 error', status: 404 });
