@@ -18,7 +18,7 @@ export class ProductFormComponent implements OnInit {
   today: string = '';
 
 
-  constructor(private fb: FormBuilder, private productService: ProductService,
+  constructor(private productService: ProductService,
               private route: ActivatedRoute
   ) {}
 

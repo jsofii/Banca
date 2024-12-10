@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { Product } from '../../model/Product';
 import { ProductService } from '../../services/product.service';
-import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { SearchInputComponent } from '../../../../shared/components/search-input/search-input.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ProductFilterService } from '../../services/product-filter.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-product-list',
@@ -20,8 +20,11 @@ export class ProductListComponent implements OnInit {
   visibleProducts: Product[] = [];
   pageSize = 5;
 
+  @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer!: ViewContainerRef;
+
   constructor(private productService: ProductService,
-              private filterService: ProductFilterService) {
+              private filterService: ProductFilterService,
+              private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit(): void {
@@ -76,6 +79,12 @@ export class ProductListComponent implements OnInit {
   }
 
   private handleDeleteAction(product: Product): void {
-    // Implement delete logic here
+    this.openModal();
+  }
+
+  private openModal(): void {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+    const componentRef = this.modalContainer.createComponent(componentFactory);
+    componentRef.instance.openModal();
   }
 }
