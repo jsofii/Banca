@@ -28,10 +28,6 @@ export class ProductService {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
-  verifyProductById(id: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/verification/${id}`);
-  }
-
   deleteProductById(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
