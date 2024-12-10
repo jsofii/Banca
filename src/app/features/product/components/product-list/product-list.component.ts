@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {Product} from '../../model/Product';
-import {ProductService} from '../../services/product.service';
-import {HttpClientModule} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {CommonModule, JsonPipe} from '@angular/common';
-import {SearchInputComponent} from '../../../../shared/components/search-input/search-input.component';
-import {ButtonComponent} from '../../../../shared/components/button/button.component';
-import {ProductFilterService} from '../../services/product-filter.service';
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../../model/Product';
+import { ProductService } from '../../services/product.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { SearchInputComponent } from '../../../../shared/components/search-input/search-input.component';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { ProductFilterService } from '../../services/product-filter.service';
 
 @Component({
   selector: 'app-product-list',
@@ -14,38 +14,43 @@ import {ProductFilterService} from '../../services/product-filter.service';
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  filteredProducts: Product[] = [];
+  visibleProducts: Product[] = [];
+  pageSize = 5;
+
   constructor(private productService: ProductService,
               private filterService: ProductFilterService) {
   }
-  filteredProducts = this.products;
-  visibleProducts: any[] = [];
-  pageSize = 5;
 
   ngOnInit(): void {
     this.handleGetProducts();
     this.handleFilterChangeAction();
     this.updateVisibleProducts();
-
   }
 
   private handleFilterChangeAction() {
     this.filterService.searchQuery$.subscribe((query) => {
-      this.filteredProducts = this.products.filter((product) =>
-        product.name.toLowerCase().includes(query.toLowerCase())
-      );
+      this.filteredProducts = this.filterService
+        .getFilteredProducts(this.products, query);
       this.updateVisibleProducts();
     });
   }
 
   private handleGetProducts() {
-    this.productService.getProducts().subscribe(it => {
-      this.products = it.data;
-      this.filteredProducts = it.data;
-      this.visibleProducts = it.data;
-      this.updateVisibleProducts();
-    })
+    this.productService.getProducts().subscribe({
+      next: (response) => {
+        console.log('Products response:', response);
+        this.products = response.data;
+        this.filteredProducts = response.data;
+        this.visibleProducts = response.data;
+        this.updateVisibleProducts();
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+      }
+    });
   }
 
   updateVisibleProducts(): void {
@@ -73,5 +78,4 @@ export class ProductListComponent implements OnInit{
   private handleDeleteAction(product: Product): void {
     // Implement delete logic here
   }
-
 }

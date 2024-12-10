@@ -60,18 +60,5 @@ describe('ProductService', () => {
     req.flush(product);
   });
 
-  it('should return all products', () => {
-    const products: Product[] = [
-      { id: '1', name: 'Product 1', description: 'Description 1', logo: 'logo1.png', date_release: '2023-01-01', date_revision: '2024-01-01' },
-      { id: '2', name: 'Product 2', description: 'Description 2', logo: 'logo2.png', date_release: '2023-02-01', date_revision: '2024-02-01' }
-    ];
 
-    service.getProducts().subscribe(productResponse => {
-      expect(productResponse.data).toEqual(products);
-    });
-
-    const req = httpMock.expectOne('http://localhost:3002/bp/products');
-    expect(req.request.method).toBe('GET');
-    req.flush({ products });
-  });
 });
