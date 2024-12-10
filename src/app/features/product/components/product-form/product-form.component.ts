@@ -21,7 +21,7 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      id: ['', Validators.required],
+      id: [{ value: '', disabled: this.isEditing }, Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
       logo: ['', Validators.required],
@@ -32,6 +32,7 @@ export class ProductFormComponent implements OnInit {
     this.productId = this.route.snapshot.paramMap.get('id');
     if (this.productId !== null) {
       this.isEditing = true;
+      this.formGroup.get('id')?.disable(); // Disable the id field if editing
       this.productService.getProductById(this.productId).subscribe(product => {
         this.formGroup.patchValue(product);
       });
