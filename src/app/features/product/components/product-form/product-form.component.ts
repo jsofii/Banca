@@ -20,15 +20,23 @@ export class ProductFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formGroup = this.fb.group({
-      id: [{ value: '', disabled: this.isEditing }, Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      logo: ['', Validators.required],
-      date_release: ['', Validators.required],
-      date_revision: [{ value: '2024-12-25', disabled: true }]
-    });
+    this.bindForm();
+    this.handleProductIdChanges();
+    this.handleDateReleaseChanges();
+  }
 
+  private handleDateReleaseChanges() {
+    this.formGroup.get('date_release')?.valueChanges.subscribe(value => {
+      if (value) {
+        const releaseDate = new Date(value);
+        const revisionDate = new Date(releaseDate);
+        revisionDate.setFullYear(releaseDate.getFullYear() + 1);
+        this.formGroup.get('date_revision')?.setValue(revisionDate.toISOString().split('T')[0]);
+      }
+    });
+  }
+
+  private handleProductIdChanges() {
     this.productId = this.route.snapshot.paramMap.get('id');
     if (this.productId !== null) {
       this.isEditing = true;
@@ -36,45 +44,63 @@ export class ProductFormComponent implements OnInit {
       this.productService.getProductById(this.productId).subscribe(product => {
         this.formGroup.patchValue(product);
       });
-    }else{
+    } else {
       this.isEditing = false
     }
   }
 
-  // Check if a field is invalid
+  private bindForm() {
+    this.formGroup = this.productService.getFormGroup(this.isEditing);
+  }
+
+
+
   isFieldInvalid(field: string): boolean {
     const control = this.formGroup.get(field);
     return !!control && control.invalid && (control.dirty || control.touched);
   }
 
-  // Reset the form to its initial state
   onReset(): void {
     this.formGroup.reset();
   }
 
-  // Handle form submission
   onSubmit(): void {
     if (this.formGroup.valid) {
-      // Enable the date_revision field to include it in the form value
-      this.formGroup.get('date_revision')?.enable();
-
-      const product: Product = this.formGroup.value;
-
-      // Disable the date_revision field again if needed
-      this.formGroup.get('date_revision')?.disable();
-
-      if(this.isEditing){
-        this.productService.updateProduct(this.productId ?? '', product).subscribe(() => {
-          this.onReset();
-        });
-      }else{
-        this.productService.createProduct(product).subscribe(() => {
-          this.onReset();
-        });
-      }
-
+      this.handleFormSubmission();
     } else {
       console.error('Form is invalid');
     }
+  }
+
+  private handleFormSubmission(): void {
+    this.prepareFormForSubmission();
+    const product: Product = this.formGroup.value;
+    this.restoreFormState();
+
+    if (this.isEditing) {
+      this.updateProduct(product);
+    } else {
+      this.createProduct(product);
+    }
+  }
+
+  private prepareFormForSubmission(): void {
+    this.formGroup.get('date_revision')?.enable();
+  }
+
+  private restoreFormState(): void {
+    this.formGroup.get('date_revision')?.disable();
+  }
+
+  private updateProduct(product: Product): void {
+    this.productService.updateProduct(this.productId ?? '', product).subscribe(() => {
+      this.onReset();
+    });
+  }
+
+  private createProduct(product: Product): void {
+    this.productService.createProduct(product).subscribe(() => {
+      this.onReset();
+    });
   }
 }

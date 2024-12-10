@@ -16,32 +16,38 @@ import {ProductFilterService} from '../../services/product-filter.service';
 })
 export class ProductListComponent implements OnInit{
   products: Product[] = [];
-  constructor(private productService: ProductService, private router: Router,
+  constructor(private productService: ProductService,
               private filterService: ProductFilterService) {
   }
   filteredProducts = this.products;
-  visibleProducts: any[] = []; // Productos visibles según el tamaño de página
-  pageSize = 5; // Tamaño de página por defecto
+  visibleProducts: any[] = [];
+  pageSize = 5;
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(it =>{
-      this.products = it.data;
-      this.filteredProducts = it.data;
-      this.visibleProducts = it.data;
-      this.updateVisibleProducts();
-    })
+    this.handleGetProducts();
+    this.handleFilterChangeAction();
+    this.updateVisibleProducts();
 
+  }
+
+  private handleFilterChangeAction() {
     this.filterService.searchQuery$.subscribe((query) => {
       this.filteredProducts = this.products.filter((product) =>
         product.name.toLowerCase().includes(query.toLowerCase())
       );
       this.updateVisibleProducts();
-
     });
-    this.updateVisibleProducts();
-
   }
-// Actualizar los productos visibles según el tamaño de página
+
+  private handleGetProducts() {
+    this.productService.getProducts().subscribe(it => {
+      this.products = it.data;
+      this.filteredProducts = it.data;
+      this.visibleProducts = it.data;
+      this.updateVisibleProducts();
+    })
+  }
+
   updateVisibleProducts(): void {
     this.visibleProducts = this.filteredProducts.slice(0, this.pageSize);
   }
@@ -54,15 +60,18 @@ export class ProductListComponent implements OnInit{
   onAction(event: Event, product: Product): void {
     const action = (event.target as HTMLSelectElement).value;
     if (action === 'update') {
-      this.router.navigate(['/product/edit', product.id]);
+      this.handleUpdateAction(product);
     } else if (action === 'delete') {
+      this.handleDeleteAction(product);
     }
   }
 
-  click(){
-    console.log('visibleProducts', this.visibleProducts);
+  private handleUpdateAction(product: Product): void {
+    this.productService.handleUpdateAction(product);
   }
 
-
+  private handleDeleteAction(product: Product): void {
+    // Implement delete logic here
+  }
 
 }
