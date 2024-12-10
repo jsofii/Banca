@@ -1,5 +1,5 @@
-<div class="product-list">
 
+<div class="product-list">
   <div class="table-container">
     <table class="product-table">
       <thead>
@@ -9,31 +9,31 @@
         <th>Descripción</th>
         <th>Fecha de liberación</th>
         <th>Fecha de reestructuración</th>
+        <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td><img src="assets/logo1.png" alt="Product Logo" class="product-logo" /></td>
-        <td>Producto 1</td>
-        <td>Descripción del producto 1</td>
-        <td>01/01/2000</td>
-        <td>01/01/2001</td>
+      <tr *ngFor="let product of products">
+        <td><img [src]="product.logo" alt="Product Logo" class="product-logo" /></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.date_release }}</td>
+        <td>{{ product.date_revision }}</td>
+        <td>
+          <select (change)="onAction($event, product)">
+            <option value="">Seleccione</option>
+            <option value="update">Editar</option>
+            <option value="delete">Eliminar</option>
+          </select>
+        </td>
       </tr>
-      <tr>
-        <td><img src="assets/logo2.png" alt="Product Logo" class="product-logo" /></td>
-        <td>Producto 2</td>
-        <td>Descripción del producto 2</td>
-        <td>01/01/2000</td>
-        <td>01/01/2001</td>
-      </tr>
-      <!-- Repeat rows as needed -->
       </tbody>
     </table>
   </div>
 
   <!-- Pagination -->
   <div class="pagination">
-    <span>5 Resultados</span>
+    <span>{{ products.length }} Resultados</span>
     <select>
       <option value="5">5</option>
       <option value="10">10</option>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {ProductService} from '../../services/product.service';
+import {Product} from '../../model/Product';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -11,18 +14,29 @@ import {CommonModule} from '@angular/common';
 export class ProductFormComponent implements OnInit {
   formGroup!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private productService: ProductService,
+              private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    // Initialize the reactive form
     this.formGroup = this.fb.group({
-      id: ['', Validators.required], // ID field with required validation
-      name: ['', Validators.required], // Name field with required validation
-      description: ['', Validators.required], // Description field with required validation
-      logo: ['', Validators.required], // Logo field with required validation
-      releaseDate: ['', Validators.required], // Release Date with required validation
-      reviewDate: [{ value: '', disabled: true }], // Disabled Review Date field
+      id: ['', Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      logo: ['', Validators.required],
+      date_release: ['', Validators.required],
+      date_revision: [{ value: '2024-12-25', disabled: true }]
     });
+    console.log('GOING HERE!!!')
+    const productId = this.route.snapshot.paramMap.get('id');
+    if (productId) {
+      console.log('GOING HERE!222!!')
+
+      this.productService.getProductById(productId).subscribe(product => {
+        console.log('PRODUCT!!', product)
+        this.formGroup.patchValue(product);
+      });
+    }
   }
 
   // Check if a field is invalid
@@ -39,7 +53,18 @@ export class ProductFormComponent implements OnInit {
   // Handle form submission
   onSubmit(): void {
     if (this.formGroup.valid) {
-      console.log('Form Submitted', this.formGroup.value);
+      // Enable the date_revision field to include it in the form value
+      this.formGroup.get('date_revision')?.enable();
+
+      const product: Product = this.formGroup.value;
+
+      // Disable the date_revision field again if needed
+      this.formGroup.get('date_revision')?.disable();
+
+      this.productService.createProduct(product).subscribe(() => {
+        console.log('Product created successfully');
+        this.onReset();
+      });
     } else {
       console.error('Form is invalid');
     }

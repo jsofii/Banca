@@ -12,9 +12,9 @@
     <div class="container">
       <div class="product-container">
         <app-search-input class="search-input"></app-search-input>
-        <app-button class="action-button" [label]="'Action'" ></app-button>
+        <app-button label="Agregar" (action)="onAction()"></app-button>
       </div>
-      <app-product-list></app-product-list>
+      <router-outlet></router-outlet>
     </div>
 
 
