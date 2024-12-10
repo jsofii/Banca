@@ -15,11 +15,16 @@ export class ProductFormComponent implements OnInit {
   formGroup!: FormGroup;
   isEditing: boolean = false;
   private productId: string | null = null;
+  today: string = '';
+
+
   constructor(private fb: FormBuilder, private productService: ProductService,
               private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.today = new Date().toISOString().split('T')[0];
+
     this.bindForm();
     this.handleProductIdChanges();
     this.handleDateReleaseChanges();
