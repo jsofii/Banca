@@ -16,6 +16,9 @@ import {ProductFilterService} from '../../services/product-filter.service';
 })
 export class ProductListComponent implements OnInit{
   products: Product[] = [];
+  visibleProducts: any[] = []; // Products visible in the current page
+  pageSize = 5; // Default page size
+  currentPage = 1;
   constructor(private productService: ProductService, private router: Router,
               private filterService: ProductFilterService) {
   }
@@ -35,7 +38,23 @@ export class ProductListComponent implements OnInit{
         product.name.toLowerCase().includes(query.toLowerCase())
       );
     });
+    this.updateVisibleProducts();
+
   }
+
+  updateVisibleProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.visibleProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  // Handle page size change
+  onPageSizeChange(event: Event): void {
+    this.pageSize = +(event.target as HTMLSelectElement).value;
+    this.currentPage = 1; // Reset to the first page
+    this.updateVisibleProducts();
+  }
+
 
   onAction(event: Event, product: Product): void {
     const action = (event.target as HTMLSelectElement).value;

@@ -1,4 +1,3 @@
-
 <div class="product-list">
   <div class="table-container">
     <table class="product-table">
@@ -13,7 +12,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let product of filteredProducts">
+      <tr *ngFor="let product of visibleProducts">
         <td><img [src]="product.logo" alt="Product Logo" class="product-logo" /></td>
         <td>{{ product.name }}</td>
         <td>{{ product.description }}</td>
@@ -31,13 +30,16 @@
     </table>
   </div>
 
-  <!-- Pagination -->
+  <!-- Pagination Controls -->
   <div class="pagination">
-    <span>{{ products.length }} Resultados</span>
-    <select>
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="20">20</option>
+    <span>{{ filteredProducts.length }} Resultados</span>
+
+    <!-- Page Size Selector -->
+    <select id="pageSize" (change)="onPageSizeChange($event)">
+      <option value="5" [selected]="pageSize === 5">5</option>
+      <option value="10" [selected]="pageSize === 10">10</option>
+      <option value="20" [selected]="pageSize === 20">20</option>
     </select>
+
   </div>
 </div>
