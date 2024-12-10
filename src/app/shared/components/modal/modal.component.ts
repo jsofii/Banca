@@ -1,30 +1,27 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent {
-  openModal(): void {
+  openModal() {
     const modal = document.getElementById('deleteModal');
     if (modal) {
-      modal.style.display = 'block';
+      modal.classList.add('show');
     }
   }
 
-  closeModal(): void {
+  closeModal() {
     const modal = document.getElementById('deleteModal');
     if (modal) {
-      modal.style.display = 'none';
+      modal.classList.remove('show');
     }
   }
 
-  confirmDelete(): void {
-    // Perform delete action
+  confirmDelete() {
+    // Add your delete logic here
     this.closeModal();
   }
 }
