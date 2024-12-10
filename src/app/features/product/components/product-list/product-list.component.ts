@@ -20,6 +20,8 @@ export class ProductListComponent implements OnInit{
               private filterService: ProductFilterService) {
   }
   filteredProducts = this.products;
+  visibleProducts: any[] = []; // Productos visibles según el tamaño de página
+  pageSize = 5; // Tamaño de página por defecto
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(it =>{
@@ -34,7 +36,20 @@ export class ProductListComponent implements OnInit{
       this.filteredProducts = this.products.filter((product) =>
         product.name.toLowerCase().includes(query.toLowerCase())
       );
+      this.updateVisibleProducts();
+
     });
+    this.updateVisibleProducts();
+
+  }
+// Actualizar los productos visibles según el tamaño de página
+  updateVisibleProducts(): void {
+    this.visibleProducts = this.filteredProducts.slice(0, this.pageSize);
+  }
+
+  onPageSizeChange(event: Event): void {
+    this.pageSize = +(event.target as HTMLSelectElement).value;
+    this.updateVisibleProducts();
   }
 
   onAction(event: Event, product: Product): void {
