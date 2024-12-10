@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {CommonModule, JsonPipe} from '@angular/common';
 import {SearchInputComponent} from '../../../../shared/components/search-input/search-input.component';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
+import {ProductFilterService} from '../../services/product-filter.service';
 
 @Component({
   selector: 'app-product-list',
@@ -15,15 +16,25 @@ import {ButtonComponent} from '../../../../shared/components/button/button.compo
 })
 export class ProductListComponent implements OnInit{
   products: Product[] = [];
-  constructor(private productService: ProductService, private router: Router) {
+  constructor(private productService: ProductService, private router: Router,
+              private filterService: ProductFilterService) {
   }
+  filteredProducts = this.products;
+
   ngOnInit(): void {
     this.productService.getProducts().subscribe(it =>{
       console.log(it)
       console.log(it.data)
       this.products = it.data;
+      this.filteredProducts = it.data;
       console.log(this.products)
     })
+
+    this.filterService.searchQuery$.subscribe((query) => {
+      this.filteredProducts = this.products.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      );
+    });
   }
 
   onAction(event: Event, product: Product): void {
