@@ -8,7 +8,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { ProductFilterService } from '../../services/product-filter.service';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import {Subscription} from 'rxjs';
-import {RefreshService} from '../../services/refresh.service';
+import {RefreshService} from '../../../../core/services/refresh.service';
 
 @Component({
   selector: 'app-product-list',
@@ -52,7 +52,6 @@ export class ProductListComponent implements OnInit {
   private handleGetProducts() {
     this.productService.getProducts().subscribe({
       next: (response) => {
-        console.log('Products response:', response);
         this.products = response.data;
         this.filteredProducts = response.data;
         this.visibleProducts = response.data;
