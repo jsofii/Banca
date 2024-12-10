@@ -1,0 +1,85 @@
+/* Modal Container */
+.modal {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Backdrop effect */
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Show the modal when class is added dynamically */
+.modal.show {
+  display: flex; /* Flex layout to center the content */
+}
+
+/* Modal Content Box */
+.modal-content {
+  background-color: #ffffff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  padding: 1.5rem; /* Padding for the content */
+  width: 400px; /* Fixed width */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  text-align: center; /* Center align the text */
+}
+
+/* Title */
+.modal-content h2 {
+  font-size: 1.25rem; /* Adjust the font size */
+  margin-bottom: 1rem; /* Space below the title */
+  color: #333; /* Dark gray color */
+}
+
+/* Modal Paragraph */
+.modal-content p {
+  font-size: 1rem; /* Font size for the description */
+  color: #555; /* Slightly lighter gray for the text */
+  margin-bottom: 1.5rem; /* Space below the paragraph */
+}
+
+/* Close Button (optional) */
+.close {
+  position: absolute; /* Position in the top-right */
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem; /* Larger size for visibility */
+  color: #333;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* Buttons Container */
+.modal-content button {
+  border: none;
+  padding: 0.5rem 1.5rem; /* Spacing for the buttons */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Cancel Button */
+.modal-content button:first-of-type {
+  background-color: #eef2f8; /* Light gray background */
+  color: #333; /* Dark text color */
+  margin-right: 1rem; /* Space between buttons */
+}
+
+.modal-content button:first-of-type:hover {
+  background-color: #dce3ec; /* Slightly darker gray on hover */
+}
+
+/* Confirm Button */
+.modal-content button:last-of-type {
+  background-color: #fcd34d; /* Yellow background */
+  color: #333; /* Dark text color */
+}
+
+.modal-content button:last-of-type:hover {
+  background-color: #fbbf24; /* Darker yellow on hover */
+}

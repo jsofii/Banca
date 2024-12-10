@@ -19,7 +19,6 @@ export class ProductComponent implements OnInit{
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
-      console.log('!!!!!!!!!!'+this.router.url+':'+!this.router.url.includes('list'));
       this.showSearchAndButton = this.router.url.includes('list');
     });
   }

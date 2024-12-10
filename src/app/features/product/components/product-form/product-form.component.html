@@ -1,6 +1,8 @@
 <div class="registration-form">
   <!-- Form Header -->
-  <h2 class="form-title">Formulario de Registro</h2>
+  <h2 class="form-title">
+
+    Formulario de Registro</h2>
 
   <!-- Form Fields -->
   <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
@@ -69,6 +71,7 @@
           id="date_release"
           type="date"
           formControlName="date_release"
+          [min]="today"
         />
       </div>
 

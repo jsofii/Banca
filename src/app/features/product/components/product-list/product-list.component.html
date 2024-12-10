@@ -4,12 +4,13 @@
     <table class="product-table">
       <thead>
       <tr>
-        <th>Logo</th>
-        <th>Nombre del producto</th>
-        <th>Descripción</th>
-        <th>Fecha de liberación</th>
-        <th>Fecha de reestructuración</th>
-        <th>Acciones</th>
+        <th>Logo
+          <img src="/info.png" alt="Info Icon" class="info-icon" /></th>
+        <th>Nombre del producto <img src="/info.png" alt="Info Icon" class="info-icon" /></th>
+        <th>Descripción <img src="/info.png" alt="Info Icon" class="info-icon" /></th>
+        <th>Fecha de liberación <img src="/info.png" alt="Info Icon" class="info-icon" /></th>
+        <th>Fecha de reestructuración <img src="/info.png" alt="Info Icon" class="info-icon" /></th>
+        <th>Acciones <img src="/info.png" alt="Info Icon" class="info-icon" /></th>
       </tr>
       </thead>
       <tbody>
@@ -20,7 +21,7 @@
         <td>{{ product.date_release }}</td>
         <td>{{ product.date_revision }}</td>
         <td>
-          <select (change)="onAction($event, product)">
+          <select class="page-size-selector" (change)="onAction($event, product)">
             <option value="">Seleccione</option>
             <option value="update">Editar</option>
             <option value="delete">Eliminar</option>
@@ -31,12 +32,8 @@
     </table>
   </div>
 
-  <!-- Pagination -->
   <div class="pagination">
     <span>{{ filteredProducts.length }} Resultados</span>
-
-    <!-- Page Size Selector -->
-    <label for="pageSize">Mostrar:</label>
     <select id="pageSize" (change)="onPageSizeChange($event)">
       <option value="5" [selected]="pageSize === 5">5</option>
       <option value="10" [selected]="pageSize === 10">10</option>
@@ -45,3 +42,7 @@
   </div>
 
 </div>
+<!-- Add a container for the modal -->
+<div #modalContainer></div>
+
+<!-- Existing template content -->
