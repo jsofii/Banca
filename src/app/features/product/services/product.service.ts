@@ -33,7 +33,7 @@ export class ProductService {
 
   getFormGroup(isEditing: boolean): FormGroup<any> {
     return this.fb.group({
-      id: [{ value: '', disabled: isEditing }, Validators.required],
+      id: [{ value: '', disabled: isEditing }, [Validators.required, Validators.minLength(3)]],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       logo: ['', [Validators.required, Validators.pattern('(https?://.*\.(?:png|jpg))')]],
