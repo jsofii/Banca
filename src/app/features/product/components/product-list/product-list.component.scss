@@ -68,3 +68,12 @@
   border-radius: var(--border-radius);
   font-size: var(--font-size-small);
 }
+
+/* Existing styles for pagination dropdown */
+.pagination select,
+.page-size-selector {
+  padding: var(--spacing-xs);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-small);
+}

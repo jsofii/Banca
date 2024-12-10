@@ -20,7 +20,7 @@
         <td>{{ product.date_release }}</td>
         <td>{{ product.date_revision }}</td>
         <td>
-          <select (change)="onAction($event, product)">
+          <select class="page-size-selector" (change)="onAction($event, product)">
             <option value="">Seleccione</option>
             <option value="update">Editar</option>
             <option value="delete">Eliminar</option>
@@ -36,7 +36,6 @@
     <span>{{ filteredProducts.length }} Resultados</span>
 
     <!-- Page Size Selector -->
-    <label for="pageSize">Mostrar:</label>
     <select id="pageSize" (change)="onPageSizeChange($event)">
       <option value="5" [selected]="pageSize === 5">5</option>
       <option value="10" [selected]="pageSize === 10">10</option>

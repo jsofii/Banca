@@ -13,7 +13,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProductFormComponent implements OnInit {
   formGroup!: FormGroup;
-
+  isEditing: boolean = false;
+  private productId: string | null = null;
   constructor(private fb: FormBuilder, private productService: ProductService,
               private route: ActivatedRoute
   ) {}
@@ -28,15 +29,17 @@ export class ProductFormComponent implements OnInit {
       date_revision: [{ value: '2024-12-25', disabled: true }]
     });
     console.log('GOING HERE!!!')
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
+    this.productId = this.route.snapshot.paramMap.get('id');
+    if (this.productId) {
+      this.isEditing = true;
       console.log('GOING HERE!222!!')
 
-      this.productService.getProductById(productId).subscribe(product => {
+      this.productService.getProductById(this.productId).subscribe(product => {
         console.log('PRODUCT!!', product)
         this.formGroup.patchValue(product);
       });
     }
+    this.isEditing = false;
   }
 
   // Check if a field is invalid
@@ -61,10 +64,18 @@ export class ProductFormComponent implements OnInit {
       // Disable the date_revision field again if needed
       this.formGroup.get('date_revision')?.disable();
 
-      this.productService.createProduct(product).subscribe(() => {
-        console.log('Product created successfully');
-        this.onReset();
-      });
+      if(this.isEditing){
+        this.productService.updateProduct(this.productId ?? '', product).subscribe(() => {
+          console.log('Product created successfully');
+          this.onReset();
+        });
+      }else{
+        this.productService.createProduct(product).subscribe(() => {
+          console.log('Product created successfully');
+          this.onReset();
+        });
+      }
+
     } else {
       console.error('Form is invalid');
     }
