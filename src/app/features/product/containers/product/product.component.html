@@ -10,7 +10,7 @@
   <!-- Main Content -->
   <main class="content">
     <div class="container">
-      <div class="product-container">
+      <div class="product-container" *ngIf="showSearchAndButton">
         <app-search-input class="search-input"></app-search-input>
         <app-button label="Agregar" (action)="onAction()"></app-button>
       </div>

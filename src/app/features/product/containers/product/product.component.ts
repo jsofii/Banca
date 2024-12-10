@@ -3,13 +3,15 @@ import {SearchInputComponent} from '../../../../shared/components/search-input/s
 import {ProductListComponent} from '../../components/product-list/product-list.component';
 import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import {Router, RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-product',
-  imports: [SearchInputComponent, ButtonComponent, RouterModule],
+  imports: [SearchInputComponent, ButtonComponent, RouterModule, CommonModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })
+
 export class ProductComponent implements OnInit{
   showSearchAndButton: boolean = true;
 
@@ -17,7 +19,8 @@ export class ProductComponent implements OnInit{
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
-      this.showSearchAndButton = !this.router.url.includes('/products/list');
+      console.log('!!!!!!!!!!'+this.router.url+':'+!this.router.url.includes('list'));
+      this.showSearchAndButton = this.router.url.includes('list');
     });
   }
   onAction() {
