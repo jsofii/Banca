@@ -7,6 +7,8 @@ import { SearchInputComponent } from '../../../../shared/components/search-input
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ProductFilterService } from '../../services/product-filter.service';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import {Subscription} from 'rxjs';
+import {RefreshService} from '../../services/refresh.service';
 
 @Component({
   selector: 'app-product-list',
@@ -19,18 +21,24 @@ export class ProductListComponent implements OnInit {
   filteredProducts: Product[] = [];
   visibleProducts: Product[] = [];
   pageSize = 5;
+  private refreshSubscription!: Subscription;
+
 
   @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer!: ViewContainerRef;
 
   constructor(private productService: ProductService,
               private filterService: ProductFilterService,
+              private refreshService: RefreshService,
               private componentFactoryResolver: ComponentFactoryResolver) {
   }
+
 
   ngOnInit(): void {
     this.handleGetProducts();
     this.handleFilterChangeAction();
     this.updateVisibleProducts();
+    this.refreshSubscription = this.refreshService.refresh$.subscribe(() => this.handleGetProducts());
+
   }
 
   private handleFilterChangeAction() {
@@ -79,12 +87,12 @@ export class ProductListComponent implements OnInit {
   }
 
   private handleDeleteAction(product: Product): void {
-    this.openModal();
+    this.openModal(product.id);
   }
 
-  private openModal(): void {
+  private openModal(productId: string): void {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
     const componentRef = this.modalContainer.createComponent(componentFactory);
-    componentRef.instance.openModal();
+    componentRef.instance.openModal(productId);
   }
 }

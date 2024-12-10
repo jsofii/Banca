@@ -25,10 +25,13 @@ export class ProductService {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
   }
 
+  deleteProductById(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/products/${id}`);
+  }
+
   getProducts(): Observable<ProductResponse> {
     return this.http.get<ProductResponse>(`${this.apiUrl}/products`);
   }
-
 
 
   getFormGroup(isEditing: boolean): FormGroup<any> {
